@@ -1,5 +1,5 @@
 """A video player class."""
-
+import random
 from .video_library import VideoLibrary
 
 
@@ -10,6 +10,8 @@ class VideoPlayer:
         self._video_library = VideoLibrary()
 
         self._current_video = None
+
+        self._current_pause = None
 
     def number_of_videos(self):
         num_videos = len(self._video_library.get_all_videos())
@@ -45,8 +47,8 @@ class VideoPlayer:
             return
 
         if self._current_video is not None: 
-
             print(f"Stopping video: {self._current_video.title}")
+        
         self._current_video = video
 
         print(f"Playing video: {video.title}")
@@ -54,7 +56,6 @@ class VideoPlayer:
 
     def stop_video(self):
         """Stops the current video."""
-
 
         if self._current_video is None:
             print(f"Cannot stop video: No video is currently playing")
@@ -67,12 +68,32 @@ class VideoPlayer:
     def play_random_video(self):
         """Plays a random video from the video library."""
 
-        print("play_random_video needs implementation")
+        video_list = self._video_library.get_all_videos()
+
+        random_video = random.choice(video_list)
+        
+        if self._current_video is not None: 
+            print(f"Stopping video: {self._current_video.title}")
+
+        print(f"Playing video: {random_video.title}")
+
+        self._current_video = random_video
 
     def pause_video(self):
         """Pauses the current video."""
 
-        print("pause_video needs implementation")
+        pause_video = self._current_pause
+
+        if pause_video is None:
+            print(f"Cannot pause video: No video is currently playing")
+            return
+
+        if self._current_pause is not None: 
+            print(f"Stopping video: {self._current_video.title}")
+        
+        self._current_pause = None
+
+        
 
     def continue_video(self):
         """Resumes playing the current video."""
